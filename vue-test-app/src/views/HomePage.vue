@@ -10,17 +10,17 @@ const active = ref(0);
   <!--  &lt;!&ndash; 这里 &ndash;&gt;-->
   <!--  <HelloWorld />-->
   <van-sticky>
-  <van-row  style="background: #fff;">
-    <van-col span="8">span: 8</van-col>
-    <van-col span="8">span: 8</van-col>
-    <van-col span="8">span: 8</van-col>
-  </van-row>
-  <van-tabs v-model:active="active">
-    <van-tab v-for="index in 8" :title="'标签 ' + index">
-      <!--      内容 {{ index }}-->
+    <van-row style="background: #fff;">
+      <van-col span="8">span: 8</van-col>
+      <van-col span="8">span: 8</van-col>
+      <van-col span="8">span: 8</van-col>
+    </van-row>
+    <van-tabs v-model:active="active">
+      <van-tab v-for="index in 8" :title="'标签 ' + index">
+        <!--      内容 {{ index }}-->
 
-    </van-tab>
-  </van-tabs>
+      </van-tab>
+    </van-tabs>
   </van-sticky>
 
   <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
@@ -31,9 +31,8 @@ const active = ref(0);
   </van-swipe>
 
   <van-grid :column-num="2">
-    <van-grid-item v-for="value in 32" :key="value" icon="photo-o" text="文字" />
+    <van-grid-item v-for="value in 32" :key="value" icon="photo-o" text="文字"/>
   </van-grid>
-
 
 
   <van-tabbar v-model="active">

@@ -1,17 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Home from '/src/views/HomePage.vue'
+import CateList from '/src/views/CateList.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/HomePage',
       name: 'HomePage',
-      component: () => import('/src/views/HomePage.vue')
+      component: Home
     },
     {
-      path: '/',
+      path: '/CateList',
       name: 'CateList',
-      component: () => import('/src/views/CateList.vue')
+      component: CateList
     }
   ]
 })

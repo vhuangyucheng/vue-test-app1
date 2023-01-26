@@ -5,9 +5,7 @@
 </template>
 
 <script setup>
-export default {
-  name: "CateList"
-}
+
 </script>
 
 <style scoped>
