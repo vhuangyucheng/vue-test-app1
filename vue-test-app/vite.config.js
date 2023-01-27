@@ -6,14 +6,29 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {
-    ArcoResolver, VueUseComponentsResolver,
+    VueUseComponentsResolver,
     VueUseDirectiveResolver
 } from 'unplugin-vue-components/resolvers'
 
-import { VantResolver } from 'unplugin-vue-components/resolvers';
+import {VantResolver} from 'unplugin-vue-components/resolvers';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    server: {
+        //port: 3000,
+        //open: true,
+        cors: true,
+        proxy: {
+            '/api': {
+                target: 'http://10.10.130.87:8080',    // 目标接口前缀
+                //ws: true,       //  代理webscoked
+                changeOrigin: true,   // 开启跨域
+                rewrite: (path) => path.replace(/\/api/, '')  // 路径重写
+            }
+        }
+    },
+
+
     plugins: [
         vue(),
         AutoImport({
