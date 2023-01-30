@@ -1,5 +1,9 @@
 <script setup>
 const active = ref(0)
+const onClickLeft = () => history.back();
+import goBackArrow from './store/goBackArrow';
+
+console.log(testPinia)
 </script>
 
 <template>

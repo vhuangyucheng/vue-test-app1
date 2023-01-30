@@ -8,7 +8,7 @@ import CloseTicket from "../views/CloseTicket.vue"
 
 
 
-const router = createRouter({
+const myRouter = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -49,5 +49,5 @@ const router = createRouter({
   ]
 })
 
-export default router
+export default myRouter
 

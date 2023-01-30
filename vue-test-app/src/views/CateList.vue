@@ -25,9 +25,7 @@ var data=axios(
       dataType:"json"
     }
 ).then(function (response){
-  // console.log(response.data);
   gogogo.value = response.data;
-  // console.log(gogogo)
 })
 </script>
 
