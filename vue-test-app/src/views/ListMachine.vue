@@ -1,5 +1,10 @@
 <script setup>
-import myRouter from "../router";
+
+import goBackArrow from '../store/goBackArrow';
+
+const store = goBackArrow();
+store.disableGoBackArrow();
+
 
 const value1 = ref(0);
 const value2 = ref('a');
@@ -14,6 +19,7 @@ const option2 = [
 
 
 import axios from "axios";
+
 
 let dataList = ref();
 let pageName = ref();
@@ -40,7 +46,6 @@ const onLoad = () => {
   console.log("onload")
   // loading.value = false;
   finished.value = true;
-
 }
 
 const changeStatus = () => {
@@ -61,9 +66,14 @@ const changeStatus = () => {
     // console.log(pageName)
   })
 }
+import myRouter from '../router'
+// import {useRoute, useRouter} from "vue-router";
 const getTicket = (id) => {
-  console.log(id);
-  myRouter.push( "listTicket" );
+  // this.$router.push({path: 'listTicket', query: {id: id}});
+   myRouter.push({path: 'listTicket', query: {id: id}});
+
+  // console.log(this.$route)
+
 }
 
 </script>

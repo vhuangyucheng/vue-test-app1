@@ -1,15 +1,21 @@
-import { defineStore } from 'pinia'
- export const goBackArrow = defineStore('goBackArrow', {
-    state: true,
+import {defineStore} from 'pinia'
+
+const goBackArrow = defineStore('goBackArrow', {
+    state: () => ({
+        leftArrow: true,
+        name: "go"
+    }),
     getters: {
-        doubleCount: (state) => state.count * 2,
+        doubleCount: (state) => state.leftArrow = false,
     },
     actions: {
-        disableGoBackArrow() {
-            this.state = false;
+        disableGoBackArrow()  {
+            this.leftArrow = false;
         },
         goBackArrow() {
-            this.state = true;
+            this.leftArrow = true;
         },
     },
 })
+
+export default goBackArrow;

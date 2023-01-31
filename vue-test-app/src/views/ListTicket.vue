@@ -1,4 +1,14 @@
 <script setup>
+import myRouter from '../router'
+console.log(myRouter.currentRoute.value.query.id)
+// const that = this;
+// console.log(that.$route.params)
+
+import goBackArrow from '../store/goBackArrow';
+const store = goBackArrow();
+store.goBackArrow();
+
+
 
 const value1 = ref(0);
 const value2 = ref('a');

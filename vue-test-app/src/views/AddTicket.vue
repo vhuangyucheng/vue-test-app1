@@ -1,4 +1,8 @@
 <script setup>
+import goBackArrow from '../store/goBackArrow';
+const store = goBackArrow();
+store.goBackArrow();
+
 const value = ref([
   {url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg'},
 ]);
