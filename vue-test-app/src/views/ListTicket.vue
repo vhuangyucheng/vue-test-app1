@@ -1,8 +1,7 @@
 <script setup>
-import myRouter from '../router'
-console.log(myRouter.currentRoute.value.query.id)
-// const that = this;
-// console.log(that.$route.params)
+
+const route = useRoute();
+console.log(route.query)
 
 import goBackArrow from '../store/goBackArrow';
 const store = goBackArrow();
