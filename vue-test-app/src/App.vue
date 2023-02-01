@@ -31,12 +31,18 @@ const store = goBackArrow();
 <!--      @click-left="onClickLeft"-->
 <!--  />-->
   <RouterView/>
-  <van-tabbar v-model="active">
+  <van-tabbar v-model="active" :safe-area-inset-bottom="true" >
     <van-tabbar-item icon="home-o" to="/HomePage">标签</van-tabbar-item>
     <van-tabbar-item icon="search" to="/closeTicket">标签</van-tabbar-item>
     <van-tabbar-item icon="friends-o" to="/listMachine">标签</van-tabbar-item>
     <van-tabbar-item icon="setting-o" to="/addTicket">标签</van-tabbar-item>
   </van-tabbar>
+
+<!--  &lt;!&ndash; 开启顶部安全区适配 &ndash;&gt;-->
+<!--  <van-nav-bar safe-area-inset-top />-->
+
+<!--  &lt;!&ndash; 开启底部安全区适配 &ndash;&gt;-->
+<!--  <van-number-keyboard safe-area-inset-bottom />-->
 </template>
 
 <style scoped>

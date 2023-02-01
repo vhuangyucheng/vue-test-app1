@@ -70,16 +70,14 @@ const changeStatus = () => {
     // console.log(pageName)
   })
 }
-
+const router = useRouter();
 const getTicket = (id) => {
   // this.$router.push({path: 'listTicket', query: {id: id}});
   // myRouter.push({path: 'listTicket', query: {id: id}});
   console.log(id)
-  // const router = useRouter();
-  // router.push({path: 'addTicket', query: {id: id}})
+  router.push({path: 'closeTicket', query: {id: id}})
 }
-import {useRouter} from "vue-router";
-const router = useRouter();
+// import {useRouter} from "vue-router";
 const addTicket = () => {
   // console.log(router)
   router.push({path: '/addTicket', query: {id: machineId}})

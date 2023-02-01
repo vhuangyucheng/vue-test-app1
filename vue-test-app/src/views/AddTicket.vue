@@ -24,26 +24,30 @@ import axios from "axios";
 
 const route = useRoute();
 const machineId = route.query.id;
+import {showNotify} from 'vant';
+
+const router = useRouter();
+
 const onSubmit = (values) => {
-  console.log(values.uploader[0].content)
+  let data = new FormData();
+  data.append('file', values.uploader[0].file);
+  data.append("machineId", machineId);
+  data.append("ticketType", values.picker);
+  data.append("ticketDescription", values.message);
+  data.append("ticketStatus", 0);
+  console.log(values.uploader[0])
   var data1 = axios(
       {
         url: "/api/ticket/insertTicket",
         method: "POST",
-        data: {
-          "status": 1,
-          "machineId": machineId,
-          "ticketImg": values.uploader[0].content,
-          "ticketType": values.picker,
-          "ticketDescription": values.message,
-          "ticketStatus": 0
-        },
-        contentType: "json",
+        data: data,
+        contentType: "multipart/form-data",
         processData: false,
         dataType: "json"
       }
   ).then(function (response) {
-    // console.log(dataList)
+    showNotify({type: 'primary', message: '成功', duration: 2000,});
+    router.push({path: 'listTicket', query: {id: machineId}});
   });
 };
 </script>
