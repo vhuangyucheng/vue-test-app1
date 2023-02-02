@@ -51,15 +51,48 @@ const onConfirm = ({selectedOptions}) => {
   showPicker.value = false;
 };
 
-import {showImagePreview} from 'vant';
+import {showImagePreview, showNotify} from 'vant';
 
 const preview = (ticketImg) => {
-  showImagePreview(['http://10.10.130.87:5173/'+ticketImg]);
+  showImagePreview(['http://10.10.130.87:5173/' + ticketImg]);
 }
+import getMachineId from '../store/getMachineId';
+
+const machineIdStore = getMachineId();
+const router = useRouter();
+const onSubmit = (values) => {
+  console.log(values)
+  // let data = new FormData();
+  // var data1 = axios(
+  //     {
+  //       url: "/api/ticket/updateTicket",
+  //       method: "POST",
+  //       data: {
+  //         ticketId: ticketId,
+  //         ticketType:values.picker,
+  //         ticketDescription:values.message1,
+  //         ticketSolution:values.message2,
+  //         ticketStatus: 1
+  //       },
+  //       contentType: "multipart/form-data",
+  //       processData: false,
+  //       dataType: "json"
+  //     }
+  // ).then(function (response) {
+  //   showNotify({type: 'primary', message: '成功', duration: 2000,});
+  //   router.push({path: 'listTicket', query: {id: machineIdStore.MachineId}});
+  // });
+};
+
+import  { FormInstance } from 'vant';
+
+const formRef = ref<FormInstance>()
+
+formRef.value?.submit();
 </script>
 <template>
 
-  <van-form @submit="onSubmit">
+  <van-form @submit="onSubmit" :disabled="ticketData.ticketStatus===1" >
     <van-cell-group inset>
       <van-row>
         <van-col span="8">
@@ -89,8 +122,8 @@ const preview = (ticketImg) => {
         />
       </van-popup>
       <van-field
-          name="message"
-          v-model="message"
+          name="message1"
+          v-model="ticketData.ticketDescription"
           rows="2"
           autosize
           label="留言"
@@ -100,21 +133,25 @@ const preview = (ticketImg) => {
           show-word-limit
       />
       <van-field
-          name="message"
-          v-model="message"
+          name="message2"
+          v-model="ticketData.ticketSolution"
           rows="2"
           autosize
-          label="留言"
+          label="解决方案"
           type="textarea"
           maxlength="50"
-          :placeholder="ticketData.ticketDescription"
+          placeholder="你是如何修好的"
           show-word-limit
       />
-
-
       <div style="margin: 16px;">
         <van-button round block type="primary" native-type="submit">
-          提交
+          提交留言不关闭
+        </van-button>
+      </div>
+
+      <div style="margin: 16px;">
+        <van-button round block type="primary" native-type="submit2">
+          关闭
         </van-button>
       </div>
     </van-cell-group>

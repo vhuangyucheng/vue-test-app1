@@ -66,12 +66,14 @@ const changeStatus = () => {
     // console.log(pageName)
   })
 }
-import myRouter from '../router'
+const router = useRouter();
 // import {useRoute, useRouter} from "vue-router";
+import getMachineId from '../store/getMachineId';
+const machineIdStore = getMachineId();
 const getTicket = (id) => {
   // this.$router.push({path: 'listTicket', query: {id: id}});
-   myRouter.push({path: 'listTicket', query: {id: id}});
-
+  router.push({path: 'listTicket', query: {id: id}});
+  machineIdStore.setMachineId(id);
   // console.log(this.$route)
 
 }
