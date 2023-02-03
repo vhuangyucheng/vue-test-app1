@@ -8,7 +8,9 @@ store.goBackArrow();
 const route = useRoute();
 const ticketId = route.query.id;
 const result = ref('');
-
+const firstImg = ref([
+  {url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg'},
+]);
 
 let ticketData = ref({});
 let img = ref();
@@ -26,14 +28,16 @@ var data1 = axios(
       dataType: "json"
     }
 ).then(function (response) {
-  console.log(response.data)
+  console.log(response.data.ticketImg2)
   ticketData.value = response.data;
   result.value = response.data.ticketType;
+  firstImg.value = [
+    {url: 'http://10.10.130.87:5173/'+response.data.ticketImg},
+    {url: 'http://10.10.130.87:5173/'+ response.data.ticketImg===null?"":response.data.ticketImg2}//todo
+  ]
 });
 
-const value = ref([
-  {url: 'https://fastly.jsdelivr.net/npm/@vant/assets/leaf.jpeg'},
-]);
+
 
 
 const showPicker = ref(false);
@@ -57,10 +61,12 @@ const preview = (ticketImg) => {
   showImagePreview(['http://10.10.130.87:5173/' + ticketImg]);
 }
 import getMachineId from '../store/getMachineId';
-
 const machineIdStore = getMachineId();
+
 const router = useRouter();
+let formRef1 = ref();
 const onSubmit = (values) => {
+  console.log(formRef1.value.getValues())
   console.log(values)
   // let data = new FormData();
   // var data1 = axios(
@@ -84,27 +90,89 @@ const onSubmit = (values) => {
   // });
 };
 
-import  { FormInstance } from 'vant';
+const submit2 = () => {
+  // console.log("submit2")
+  // console.log(formRef1.value.getValues())
+  let data = new FormData();
+  data.append('ticketId', ticketId);
+  data.append('file', formRef1.value.getValues().uploader[1].file);
+  data.append("machineId", machineIdStore.MachineId);
+  data.append("ticketType", formRef1.value.getValues().picker);
+  data.append("ticketDescription", formRef1.value.getValues().message1);
+  data.append("ticketSolution", formRef1.value.getValues().message2);
+  data.append("ticketStatus", 0);
+  var data1 = axios(
+      {
+        url: "/api/ticket/updateTicket",
+        method: "POST",
+        data: data,
+        contentType: "multipart/form-data",
+        processData: false,
+        dataType: "json"
+      }
+  ).then(function (response) {
+    showNotify({type: 'primary', message: '成功', duration: 2000,});
+    ticketData.value = response.data;
+    result.value = response.data.ticketType;
+    firstImg.value = [
+      {url: 'http://10.10.130.87:5173/'+response.data.ticketImg},
+      {url: 'http://10.10.130.87:5173/'+response.data.ticketImg2}
+    ]
+  });
+}
+const reopenSubmit = () => {
 
-const formRef = ref<FormInstance>()
+}
+const submit1 = () => {
+  let data = new FormData();
+  data.append('ticketId', ticketId);
+  data.append('file', formRef1.value.getValues().uploader[1].file);
+  data.append("machineId", machineIdStore.MachineId);
+  data.append("ticketType", formRef1.value.getValues().picker);
+  data.append("ticketDescription", formRef1.value.getValues().message1);
+  data.append("ticketSolution", formRef1.value.getValues().message2);
+  data.append("ticketStatus", 1);
+  var data1 = axios(
+      {
+        url: "/api/ticket/updateTicket",
+        method: "POST",
+        data: data,
+        contentType: "multipart/form-data",
+        processData: false,
+        dataType: "json"
+      }
+  ).then(function (response) {
+    showNotify({type: 'primary', message: '成功', duration: 2000,});
+    ticketData.value = response.data;
+    result.value = response.data.ticketType;
+    firstImg.value = [
+      {url: 'http://10.10.130.87:5173/'+response.data.ticketImg},
+      {url: 'http://10.10.130.87:5173/'+response.data.ticketImg2}
+    ]
+  });
+}
 
-formRef.value?.submit();
 </script>
 <template>
 
-  <van-form @submit="onSubmit" :disabled="ticketData.ticketStatus===1" >
+  <van-form @submit="onSubmit" :disabled="ticketData.ticketStatus===1" ref="formRef1">
     <van-cell-group inset>
-      <van-row>
-        <van-col span="8">
-          <van-cell title="图片"/>
-        </van-col>
-        <van-image
-            width="100"
-            height="100"
-            :src="'http://10.10.130.87:5173/'+ticketData.ticketImg"
-            @click="preview(ticketData.ticketImg)"
-        />
-      </van-row>
+      <van-field name="uploader" label="文件上传">
+        <template #input>
+          <van-uploader :max-count="2" v-model="firstImg"/>
+        </template>
+      </van-field>
+<!--      <van-row>-->
+<!--        <van-col span="8">-->
+<!--          <van-cell title="图片"/>-->
+<!--        </van-col>-->
+<!--        <van-image-->
+<!--            width="100"-->
+<!--            height="100"-->
+<!--            :src="'http://10.10.130.87:5173/'+ticketData.ticketImg"-->
+<!--            @click="preview(ticketData.ticketImg)"-->
+<!--        />-->
+<!--      </van-row>-->
 
       <van-field
           v-model="result"
@@ -144,14 +212,19 @@ formRef.value?.submit();
           show-word-limit
       />
       <div style="margin: 16px;">
-        <van-button round block type="primary" native-type="submit">
-          提交留言不关闭
+        <van-button round block type="primary" v-if="ticketData.ticketStatus === 0" @click="submit2">
+          提交留言/ 添加照片，但不关闭
         </van-button>
       </div>
 
       <div style="margin: 16px;">
-        <van-button round block type="primary" native-type="submit2">
+        <van-button round block type="primary" v-if="ticketData.ticketStatus === 0" @click="submit1">
           关闭
+        </van-button>
+      </div>
+      <div style="margin: 16px;">
+        <van-button round block type="primary" v-if="ticketData.ticketStatus === 1" @click="reopenSubmit">
+          重新打开工单
         </van-button>
       </div>
     </van-cell-group>
