@@ -15,6 +15,9 @@ const goBackArrow = defineStore('goBackArrow', {
         goBackArrow() {
             this.leftArrow = true;
         },
+        setPageName(pageName) {
+            this.name = pageName;
+        },
     },
 })
 

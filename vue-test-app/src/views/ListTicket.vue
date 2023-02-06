@@ -1,8 +1,6 @@
 <script setup>
 
-
-
-
+const timePattern = "MM-DD HH:MM"
 const route = useRoute();
 const machineId = route.query.id;
 
@@ -10,6 +8,7 @@ import goBackArrow from '../store/goBackArrow';
 
 const store = goBackArrow();
 store.goBackArrow();
+store.setPageName("工单列表")
 
 
 const value1 = ref(1);
@@ -41,7 +40,7 @@ var data1 = axios(
     }
 ).then(function (response) {
   dataList.value = response.data.list;
-  // console.log(dataList)
+  console.log(dataList)
 });
 const loading = ref(false);
 const finished = ref(false);
@@ -67,7 +66,6 @@ const changeStatus = () => {
       }
   ).then(function (response) {
     dataList.value = response.data.list;
-    // console.log(pageName)
   })
 }
 const router = useRouter();
@@ -83,6 +81,14 @@ const addTicket = () => {
   router.push({path: '/addTicket', query: {id: machineId}})
 }
 
+const dateFormat = (ticketIssueTime, ticketCloseTime)=>{
+  const date = new Date(ticketIssueTime);
+  const date2 = new Date(ticketCloseTime);
+  if(ticketCloseTime ===null)
+  return ' at \xa0\xa0\xa0' + date.getMonth().toString() + '-'+ date.getUTCDate().toString()+ '  '+  + '\n'+ date.toLocaleTimeString()
+  return ' at ' + date.getMonth().toString() + '-'+ date.getUTCDate().toString()+ '  '+  + '\n'+ date.toLocaleTimeString()+
+      ' update at ' + date2.getMonth().toString() + '-'+ date2.getUTCDate().toString()+ '  '+  + '\n'+ date2.toLocaleTimeString()
+}
 </script>
 <template>
   <van-dropdown-menu>
@@ -96,6 +102,7 @@ const addTicket = () => {
       @load="onLoad"
   >
     <van-cell v-for="item in dataList" :key="item.ticketId" :title="item.ticketType"
+              :label="'sn：'+item.ticketId +  dateFormat(item.ticketIssueTime, item.ticketCloseTime)"
               @click="getTicket(item.ticketId)">
       <van-tag v-if="item.ticketStatus === 0" type="danger">未关闭</van-tag>
       <van-tag v-else-if="item.ticketStatus === 1" type="success ">关闭</van-tag>

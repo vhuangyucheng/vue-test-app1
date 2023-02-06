@@ -4,7 +4,7 @@ import goBackArrow from '../store/goBackArrow';
 
 const store = goBackArrow();
 store.disableGoBackArrow();
-
+store.setPageName("机器列表")
 
 const value1 = ref(0);
 const value2 = ref('a');

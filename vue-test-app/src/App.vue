@@ -4,6 +4,7 @@ const onClickLeft = () => history.back();
 import goBackArrow from './store/goBackArrow';
 
 const store = goBackArrow();
+store.setPageName("主页")
 </script>
 
 <template>
@@ -13,7 +14,7 @@ const store = goBackArrow();
   <!--    <van-col span="8"></van-col>-->
   <!--  </van-row>-->
   <van-nav-bar
-      title="标题"
+      :title="store.name"
       :left-text="store.leftArrow === true?'返回':''"
       :left-arrow="store.leftArrow === true"
       @click-left="onClickLeft"
@@ -32,10 +33,11 @@ const store = goBackArrow();
 <!--  />-->
   <RouterView/>
   <van-tabbar v-model="active" :safe-area-inset-bottom="true" >
-    <van-tabbar-item icon="home-o" to="/HomePage">标签</van-tabbar-item>
-    <van-tabbar-item icon="search" to="/closeTicket">标签</van-tabbar-item>
-    <van-tabbar-item icon="friends-o" to="/listMachine">标签</van-tabbar-item>
-    <van-tabbar-item icon="setting-o" to="/addTicket">标签</van-tabbar-item>
+    <van-tabbar-item icon="home-o" to="/listMachine">机器列表</van-tabbar-item>
+    <van-tabbar-item icon="search" >未开发</van-tabbar-item>
+    <van-tabbar-item icon="friends-o" >未开发</van-tabbar-item>
+    <van-tabbar-item icon="setting-o" >未开发</van-tabbar-item>
+
   </van-tabbar>
 
 <!--  &lt;!&ndash; 开启顶部安全区适配 &ndash;&gt;-->

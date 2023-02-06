@@ -20,8 +20,8 @@ export default defineConfig({
         cors: true,
         proxy: {
             '/api': {
-                target: 'http://10.10.130.87:8080',    // 目标接口前缀
-                // target: 'http://localhost:8080',
+                // target: 'http://10.10.130.87:8080',    // 目标接口前缀
+                target: 'http://localhost:8080',
                 //ws: true,       //  代理webscoked
                 changeOrigin: true,   // 开启跨域
                 rewrite: (path) => path.replace(/\/api/, '')  // 路径重写

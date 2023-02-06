@@ -3,6 +3,7 @@ import goBackArrow from '../store/goBackArrow';
 
 const store = goBackArrow();
 store.goBackArrow();
+store.setPageName("增加工单")
 
 const value = ref();
 const result = ref('');
